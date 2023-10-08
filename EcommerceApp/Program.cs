@@ -1,7 +1,8 @@
 
+using E_Core.Interfaces;
 using EcommerceClasslib.DBContext;
 using Microsoft.EntityFrameworkCore;
-
+using EcommerceClasslib.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +13,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<EContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("EcContextconnectionstring")));
-
+    options.UseSqlServer(builder.Configuration.GetConnectionString("EcContextconnectionstring"),b=>b.MigrationsAssembly("EcommerceClasslib")));
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,5 +27,21 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+var context = services.GetRequiredService<EContext>();
+var logger = services.GetRequiredService<ILogger<Program>>();
+try
+{
+    await context.Database.MigrateAsync();
+    await ContextSeed.SeedAsync(context);
+}
+catch (Exception e)
+{
+   logger.LogError(e,"An Error occured during migration");
+}
+
+
 
 app.Run();
