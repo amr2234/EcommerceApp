@@ -1,6 +1,6 @@
 ﻿namespace E_Core.Entities
 {
-    public class ProductType :BaseClass<int>
+    public class ProductType :BaseClass
     {
         public string Name { get; set; }
     }

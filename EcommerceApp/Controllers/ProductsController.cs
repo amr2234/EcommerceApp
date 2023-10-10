@@ -1,35 +1,51 @@
 ﻿
+using AutoMapper;
 using E_Core.Entities;
 using E_Core.Interfaces;
+using E_Core.Spacification;
+using EcommerceApp.Data_Transfer_Object;
 using EcommerceClasslib.DBContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceApp.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductsController : ControllerBase
+
+    public class ProductsController : BaseApiController
     {
-        private readonly IProductRepository _repo;
-        public ProductsController(IProductRepository repo)
+        
+        private readonly IGenaricRepositiory<Product> _ProductRepo;
+        private readonly IGenaricRepositiory<ProductBrand> _ProductBrandRepo;
+        private  readonly IGenaricRepositiory<ProductType> _ProductTypeRepo;
+        private readonly IMapper _mapper;
+        public ProductsController(IGenaricRepositiory<Product>ProductRepo, 
+            IGenaricRepositiory<ProductBrand> ProductBrandRepo, 
+            IGenaricRepositiory<ProductType> ProductTypeRepo,IMapper mapper)
         {
-           _repo = repo;
+            _mapper = mapper;
+            _ProductRepo = ProductRepo;
+            _ProductBrandRepo = ProductBrandRepo;
+            _ProductTypeRepo = ProductTypeRepo;
+
+
+
         }
         
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProducts()
+        public async Task<ActionResult<IReadOnlyList<ProductReturnDTO>>> GetProducts()
         {
-            var products = await _repo.GetProductsAsync();
-            return Ok(products);
+            var spac = new ProductsWithBrandAndType();
+            var products = await _ProductRepo.ListAsync(spac);
+            return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductReturnDTO>>(products));
 
 
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<ProductReturnDTO>> GetProduct(int id)
         {
-
-            return await _repo.GetProductbyIdAsync(id);
+            var spec = new ProductsWithBrandAndType(id);
+            var product = await _ProductRepo.GetEntitywithSpacification(spec);
+            return _mapper.Map<Product, ProductReturnDTO>(product);
 
 
         }
@@ -37,23 +53,23 @@ namespace EcommerceApp.Controllers
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
         {
-            return  Ok(await _repo.GetProductBrandsAsync());
+            return  Ok(await _ProductBrandRepo.GetItemsAsync());
         }
         [HttpGet("brands/{id}")]
         public async Task<ActionResult<ProductBrand>> GetProductBrandbyId(int id)
         {
-            return Ok(await _repo.GetProductBrandbyIdAsync(id));
+            return Ok(await _ProductBrandRepo.GetItemByIdAsync(id));
         }
 
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProducttypes()
         {
-            return Ok(await _repo.GetProductTypessAsync());
+            return Ok(await _ProductTypeRepo.GetItemsAsync());
         }
         [HttpGet("types/{id}")]
         public async Task<ActionResult<ProductBrand>> GetProductTypebyId(int id)
         {
-            return Ok(await _repo.GetProductTypebyIdAsync(id));
+            return Ok(await _ProductTypeRepo.GetItemByIdAsync(id));
         }
 
     }

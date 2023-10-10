@@ -1,8 +1,8 @@
 ﻿namespace E_Core.Entities
 {
-    public abstract class BaseClass<T>
+    public abstract class BaseClass
     {
-        public T id { get; set; }
+        public int id { get; set; }
 
     }
 }

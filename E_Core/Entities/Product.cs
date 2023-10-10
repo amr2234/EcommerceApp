@@ -3,7 +3,7 @@
 
 namespace E_Core.Entities
 {
-    public class Product:BaseClass<int>
+    public class Product:BaseClass
     {
         public string Name { get; set; }
         public string Description { get; set; }

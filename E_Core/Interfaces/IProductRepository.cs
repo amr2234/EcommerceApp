@@ -7,7 +7,7 @@ using E_Core.Entities;
 
 namespace E_Core.Interfaces
 {
-    public interface IProductRepository
+    public interface IProductRepository 
     {
         Task<Product> GetProductbyIdAsync(int id);
         Task<IReadOnlyList<Product>> GetProductsAsync();

@@ -31,6 +31,7 @@ namespace EcommerceClasslib.Data
 
         public async Task<Product> GetProductbyIdAsync(int id)
         {
+
             return _context.Products
                 .Include(e => e.ProductType)
                 .Include(e => e.ProductBrand)

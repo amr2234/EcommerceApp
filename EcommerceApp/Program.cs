@@ -15,7 +15,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<EContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("EcContextconnectionstring"),b=>b.MigrationsAssembly("EcommerceClasslib")));
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped(typeof(IGenaricRepositiory<>), typeof(GenaricRepository<>));
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -25,7 +28,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
-
+app.UseStaticFiles();
 app.MapControllers();
 
 using var scope = app.Services.CreateScope();
