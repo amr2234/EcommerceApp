@@ -1,31 +1,27 @@
 
 using E_Core.Interfaces;
+using EcommerceApp.Errors;
+using EcommerceApp.Extentions;
+using EcommerceApp.Middleware;
 using EcommerceClasslib.DBContext;
 using Microsoft.EntityFrameworkCore;
 using EcommerceClasslib.Data;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<EContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("EcContextconnectionstring"),b=>b.MigrationsAssembly("EcommerceClasslib")));
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddScoped(typeof(IGenaricRepositiory<>), typeof(GenaricRepository<>));
+builder.Services.AddAppServices(builder.Configuration);
 var app = builder.Build();
-
-
+app.UseStatusCodePagesWithReExecute("/error/{0}");
+app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(); 
 }
+
 
 app.UseAuthorization();
 app.UseStaticFiles();

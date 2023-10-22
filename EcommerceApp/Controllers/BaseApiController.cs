@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EcommerceClasslib.DBContext;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceApp.Controllers
 {
@@ -6,6 +7,7 @@ namespace EcommerceApp.Controllers
     [Route("api/[controller]")]
     public class BaseApiController :ControllerBase
     {
+        
 
     }
 }
