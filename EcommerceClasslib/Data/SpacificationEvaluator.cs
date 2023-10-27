@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceClasslib.Data
 {
-    internal class SpacificationEvaluator<TEntitiy> where TEntitiy : BaseClass
+    public class SpacificationEvaluator<TEntitiy> where TEntitiy : BaseClass
     {
         public static IQueryable<TEntitiy> GetQuery(IQueryable<TEntitiy> inputQuery,
             ISpacification<TEntitiy> Spac)
@@ -17,9 +17,33 @@ namespace EcommerceClasslib.Data
             var query = inputQuery;
             if(Spac.Criteria != null)  query = query.Where(Spac.Criteria);
 
+
+            if (Spac.OrderBy != null)
+            {
+                query = query.OrderBy(Spac.OrderBy);
+            }
+            if (Spac.OrderByDesending != null)
+            {
+                query = query.OrderByDescending(Spac.OrderByDesending);
+            }
+
+
+            if (Spac.IsPagingEnabled)
+            {
+                query = query.Skip(Spac.Skip).Take(Spac.Take);
+            }
+
+
+
+
+
             query = Spac.Includes.Aggregate
-                (query,(current,include)=>current.Include(include));
+                (query, (current, include) => current.Include(include));
+
+
             return query;
+
+
         }
 
     }

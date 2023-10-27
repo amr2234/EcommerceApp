@@ -15,5 +15,7 @@ namespace E_Core.Interfaces
         Task<T> GetEntitywithSpacification(ISpacification<T> spec);
         Task<IReadOnlyList<T>> ListAsync(ISpacification<T> spec);
 
+        Task<int> CountDataAsync(ISpacification<T> spec);
+
     }
 }

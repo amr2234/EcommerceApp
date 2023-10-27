@@ -40,10 +40,15 @@ namespace EcommerceClasslib.Data
         {
             return await ApplySpacification(spec).FirstOrDefaultAsync();
         }
-
+        public async Task<int> CountDataAsync(ISpacification<T> spec)
+        {
+            return await ApplySpacification(spec).CountAsync();
+        }
         private IQueryable<T> ApplySpacification(ISpacification<T> Spec)
         {
             return SpacificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), Spec);
         }
+
+
     }
 }

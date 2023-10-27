@@ -17,7 +17,6 @@ namespace EcommerceApp.Middleware
             _logger = logger;
             _env = env;
 
-            
         }
 
         public async Task Invoke(HttpContext context)

@@ -4,6 +4,7 @@ using E_Core.Entities;
 using E_Core.Interfaces;
 using E_Core.Spacification;
 using EcommerceApp.Data_Transfer_Object;
+using EcommerceApp.Helpers;
 using EcommerceClasslib.DBContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -32,11 +33,16 @@ namespace EcommerceApp.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductReturnDTO>>> GetProducts()
+        public async Task<ActionResult<Pagination<ProductReturnDTO>>> GetProducts([FromQuery]ProductSpecParms par)
         {
-            var spac = new ProductsWithBrandAndType();
+            var spac = new ProductsWithBrandAndType(par);
+            var countSpec = new ProductswithFiltersCountSpac(par);
+            var totalItems = await _ProductRepo.CountDataAsync(countSpec);
+        
             var products = await _ProductRepo.ListAsync(spac);
-            return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductReturnDTO>>(products));
+            var data =_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductReturnDTO>>(products);
+
+            return Ok(new Pagination<ProductReturnDTO>(par.PageIndex, par.PageSize, totalItems, data));
 
 
         }

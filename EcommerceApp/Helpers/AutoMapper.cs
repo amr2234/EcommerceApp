@@ -14,7 +14,7 @@ namespace EcommerceApp.Helpers
                 .ForMember(x => x.ProductType,
                     a => a.MapFrom(s => s.ProductType.Name))
                 .ForMember(x => x.PictureUrl,
-                a => a.MapFrom<ProductUrlResolver>());
+                a => a.MapFrom<ProductUrlResolver>()).ReverseMap();
         }
 
 
