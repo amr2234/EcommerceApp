@@ -7,11 +7,16 @@ namespace EcommerceClasslib.DBContext
 {
     public class EContext :DbContext
     {
-       
+        public EContext() : base()
+        {
+            
+        }
         public EContext(DbContextOptions<EContext> options)
             : base(options)
         {
         }
+
+       
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductBrand> ProductBrands { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }

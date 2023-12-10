@@ -13,26 +13,26 @@ namespace EcommerceClasslib.Data
     {
         public static async Task SeedAsync(EContext context)
         {
-            if (!context.ProductBrands.Any())
+            if (context.ProductBrands.Any())
             {
                 var brandsData =
-                    File.ReadAllText("D://.Net Course//EcommerceApp//EcommerceClasslib//Data//SeedData//brands.json");
+                    File.ReadAllText("../EcommerceClasslib/Data/SeedData/brands.json");
                 var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
                 context.ProductBrands.AddRange(brands);
             }
   
 
-               if (!context.ProductTypes.Any()) 
+               if (context.ProductTypes.Any()) 
                {
                    var typesData =
-                       File.ReadAllText("D://.Net Course//EcommerceApp//EcommerceClasslib//Data//SeedData//types.json");
+                       File.ReadAllText("../EcommerceClasslib/Data/SeedData/types.json");
                    var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
                    context.ProductTypes.AddRange(types);
                }
             if (!context.Products.Any())
             {
                 var productsData =
-                    File.ReadAllText("D://.Net Course//EcommerceApp//EcommerceClasslib//Data//SeedData//products.json");
+                    File.ReadAllText("../EcommerceClasslib/Data/SeedData/products.json");
                 var products = JsonSerializer.Deserialize<List<Product>>(productsData);
                 context.Products.AddRange(products);
             }

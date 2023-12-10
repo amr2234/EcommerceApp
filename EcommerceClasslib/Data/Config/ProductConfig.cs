@@ -9,15 +9,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EcommerceClasslib.Data.Config
 {
-    public class ProductConfig : IEntityTypeConfiguration<Product>
-    {
-        public void Configure(EntityTypeBuilder<Product> builder)
-        {
-            builder.Property(e=>e.Name).IsRequired().HasMaxLength(100);
-           // builder.Property(e=>e.Description).IsRequired().HasMaxLength(100);
-            builder.Property(e => e.Price).IsRequired().HasColumnType("decimal(18,2)");
-            builder.Property(e => e.PictureUrl).IsRequired();
-            builder.HasOne(b => b.ProductBrand).WithMany().HasForeignKey(e => e.ProductBrandId);
-        }
-    }
+    //public class ProductConfig : IEntityTypeConfiguration<Product>
+    //{
+    //    public void Configure(EntityTypeBuilder<Product> builder)
+    //    {
+    //        builder.Property(e=>e.Name).IsRequired().HasMaxLength(100);
+    //       // builder.Property(e=>e.Description).IsRequired().HasMaxLength(100);
+    //        builder.Property(e => e.Price).IsRequired().HasColumnType("decimal(18,2)");
+    //        builder.Property(e => e.PictureUrl).IsRequired();
+    //        builder.HasOne(b => b.ProductBrand).WithMany().HasForeignKey(e => e.ProductBrandId);
+    //    }
+    //}
 }

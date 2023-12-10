@@ -39,7 +39,7 @@ try
 }
 catch (Exception e)
 {
-   logger.LogError(e,"An Error occured during migration");
+   logger.LogError(e,"An Error occured during migration............................................................");
 }
 
 

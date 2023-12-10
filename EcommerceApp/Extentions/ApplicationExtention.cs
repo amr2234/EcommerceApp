@@ -23,6 +23,7 @@ namespace EcommerceApp.Extentions
                 options.UseSqlServer(config.GetConnectionString("EcContextconnectionstring"), b => b.MigrationsAssembly("EcommerceClasslib")));
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped(typeof(IGenaricRepositiory<>), typeof(GenaricRepository<>));
             services.Configure<ApiBehaviorOptions>(
                 option => option.InvalidModelStateResponseFactory = actioncontext =>

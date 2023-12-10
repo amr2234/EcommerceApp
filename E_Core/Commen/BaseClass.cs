@@ -2,6 +2,7 @@
 {
     public abstract class BaseClass
     {
+
         public int id { get; set; }
 
     }
