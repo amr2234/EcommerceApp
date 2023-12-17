@@ -5,7 +5,7 @@
 namespace EcommerceClasslib.Migrations
 {
     /// <inheritdoc />
-    public partial class _1st : Migration
+    public partial class first : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

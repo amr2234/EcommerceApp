@@ -23,13 +23,14 @@ namespace EcommerceClasslib.Data
   
 
                if (context.ProductTypes.Any()) 
+
                {
                    var typesData =
                        File.ReadAllText("../EcommerceClasslib/Data/SeedData/types.json");
                    var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
                    context.ProductTypes.AddRange(types);
                }
-            if (!context.Products.Any())
+            if (context.Products.Any())
             {
                 var productsData =
                     File.ReadAllText("../EcommerceClasslib/Data/SeedData/products.json");
@@ -37,7 +38,7 @@ namespace EcommerceClasslib.Data
                 context.Products.AddRange(products);
             }
 
-            if (context.ChangeTracker.HasChanges()) await context.SaveChangesAsync();
+           // if (context.ChangeTracker.HasChanges()) await context.SaveChangesAsync();
         }
     }
 }

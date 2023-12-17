@@ -4,6 +4,7 @@ using EcommerceClasslib.Data;
 using EcommerceClasslib.DBContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace EcommerceApp.Extentions
 {
@@ -11,7 +12,7 @@ namespace EcommerceApp.Extentions
     {
         public static IServiceCollection AddAppServices(this IServiceCollection services, IConfiguration config)
         {
-           
+
 
             // Add services to the container.
 
@@ -20,7 +21,14 @@ namespace EcommerceApp.Extentions
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddDbContext<EContext>(options =>
-                options.UseSqlServer(config.GetConnectionString("EcContextconnectionstring"), b => b.MigrationsAssembly("EcommerceClasslib")));
+            {
+                options.ConfigureWarnings(w => w.Ignore(SqlServerEventId.DecimalTypeKeyWarning));
+                options.UseSqlServer(config.GetConnectionString("EcContextconnectionstring"), b => b.MigrationsAssembly("EcommerceClasslib"));
+            });
+         
+             
+        
+           
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
