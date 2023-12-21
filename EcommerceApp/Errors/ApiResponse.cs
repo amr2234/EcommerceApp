@@ -18,12 +18,12 @@
         {
             return statuscode switch
             {
-                400 => " Bad Request, you have made",
-                401 => " Authorized , you are not",
-                404 => " Resource found , it was not",
-                500 => " Errors are the path to the dark side",
-                _=> null
-            };
+                400 => " You have made Bad Request",
+                401 => " you are not Authorized ",
+                404 => " Resource Not found ",
+                500 => " Server Error",
+                _ => null
+            }; ;
 
         }
     }

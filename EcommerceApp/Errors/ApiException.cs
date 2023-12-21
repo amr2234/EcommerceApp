@@ -1,4 +1,6 @@
-﻿namespace EcommerceApp.Errors
+﻿using EcommerceApp.Errors;
+
+namespace EcommerceApp.Errors
 {
     public class ApiException : ApiResponse
     {
@@ -10,3 +12,5 @@
         public string Detials { get; set; }
     }
 }
+
+

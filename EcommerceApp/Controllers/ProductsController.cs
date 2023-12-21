@@ -4,6 +4,7 @@ using E_Core.Entities;
 using E_Core.Interfaces;
 using E_Core.Spacification;
 using EcommerceApp.Data_Transfer_Object;
+using EcommerceApp.Errors;
 using EcommerceApp.Helpers;
 using EcommerceClasslib.DBContext;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +51,13 @@ namespace EcommerceApp.Controllers
         public async Task<ActionResult<ProductReturnDTO>> GetProduct(int id)
         {
             var spec = new ProductsWithBrandAndType(id);
+            
             var product = await _ProductRepo.GetEntitywithSpacification(spec);
+            if(product == null)
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+
             return _mapper.Map<Product, ProductReturnDTO>(product);
 
 
