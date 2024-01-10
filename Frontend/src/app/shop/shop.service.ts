@@ -1,17 +1,23 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Type } from '@angular/compiler';
 import { Injectable } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { Brands } from '../shared/Models/brands';
 import { Pagenation } from '../shared/Models/Pagenation';
-import { Product } from '../shared/Models/Products';
+import { NewProduct, Product } from '../shared/Models/Products';
 import { ShopParams } from '../shared/Models/ShopParams';
 import { Types } from '../shared/Models/types';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
-  baseUrl = " https://localhost:5001/api/"
+  baseUrl = " https://localhost:5001/api/";
+  formData: NewProduct = new NewProduct()
+  formSubmitted: boolean = false;
+  list: NewProduct[] = [];
   constructor(private http: HttpClient) { }
 
   getproducts(shopParams: ShopParams) {
@@ -36,6 +42,14 @@ export class ShopService {
   }
   getProductbyId(id: number) {
     return this.http.get<Product>(this.baseUrl + "products/" + id);
+  }
+  public Addproduct(model: any): Observable<any> {
+    return this.http.post(this.baseUrl + "products", model);
+  }  
+  resetForm(form: NgForm) {
+    form.form.reset()
+    this.formData = new NewProduct()
+    this.formSubmitted = false
   }
 
 }

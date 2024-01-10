@@ -62,6 +62,17 @@ namespace EcommerceApp.Controllers
 
 
         }
+        [HttpPost]
+        public async Task<ActionResult<ProductReturnDTO>> AddProduct(ProductReturnDTO productReturnDTO)
+        {
+
+          var newproduct = _mapper.Map<ProductReturnDTO, Product>(productReturnDTO);
+            if (newproduct == null) return BadRequest(new ApiResponse(400, "Problem Adding product"));
+            await _ProductRepo.Add(newproduct);
+          
+            return Ok(newproduct);
+
+        }
 
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()

@@ -1,0 +1,97 @@
+<div class="container-xl">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4><b>Add Product</b></h4>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#" routerLink="/Home" class="btn btn-success back">
+                            <i class='fas fa-arrow-circle-left'></i>
+                            Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <form #NewProduct="ngForm">
+                <div class="table-content">
+                    <div class="form-group p-10 row" style="padding:10px;">
+                        <div class="col-sm-3">
+                            <label for="name" class="p-t-b-10">Product Name<span class="requiredStar">*</span></label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="name" required maxlength="255"
+                                   [(ngModel)]="addproduct.name" name="name" #name="ngModel">
+                            <div *ngIf="name.errors && isSubmitted" class="alert alert-danger validationError">
+                                <div [hidden]="!name.errors?.['required']">
+                                    product Name is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group p-10 row" style="padding:10px;">
+                        <div class="col-sm-3">
+                            <label for="description" class="p-t-b-10">Product description<span class="requiredStar">*</span></label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="name" required maxlength="255"
+                                   [(ngModel)]="addproduct.description" name="description" #description="ngModel">
+                            <div *ngIf="name.errors && isSubmitted" class="alert alert-danger validationError">
+                                <div [hidden]="!name.errors?.['required']">
+                                    product description is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group p-10 row" style="padding:10px;">
+                        <div class="col-sm-3">
+                            <label for="description" class="p-t-b-10">Product Price<span class="requiredStar">*</span></label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" id="price" required maxlength="255"
+                                   [(ngModel)]="addproduct.price" name="price" #price="ngModel">
+                            <div *ngIf="name.errors && isSubmitted" class="alert alert-danger validationError">
+                                <div [hidden]="!name.errors?.['required']">
+                                    product price is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group p-10 row" style="padding:10px;">
+                        <div class="col-sm-3">
+                            <label class="p-t-b-10">Brand<span class="requiredStar">*</span></label>
+                        </div>
+                        <div class="col-sm-9">
+                            <select class="form-control"
+                                    id="brand"
+                                    name="brand"
+                                    [(ngModel)]="addproduct.productBrandId">
+
+                                <option *ngFor="let brand of brands" [ngValue]="brand">{{ brand.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group p-10 row" style="padding:10px;">
+                        <div class="col-sm-3">
+                            <label class="p-t-b-10">Type<span class="requiredStar">*</span></label>
+                        </div>
+                        <div class="col-sm-9">
+                            <select class="form-control"
+                                    id="type"
+                                    name="type"
+                                    [(ngModel)]="addproduct.productTypeId">
+
+                                <option *ngFor="let type of types" [ngValue]="type">{{ type.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-footer">
+                    <button class="btn btn-success" (click)="Addproduct(NewProduct.form.valid)">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

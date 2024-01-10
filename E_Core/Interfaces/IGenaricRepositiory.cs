@@ -11,11 +11,12 @@ namespace E_Core.Interfaces
     public  interface IGenaricRepositiory<T> 
     {
         Task<T> GetItemByIdAsync(int id);
+        Task<bool> Add(T entity);
         Task<IReadOnlyList<T>> GetItemsAsync();
         Task<T> GetEntitywithSpacification(ISpacification<T> spec);
         Task<IReadOnlyList<T>> ListAsync(ISpacification<T> spec);
 
         Task<int> CountDataAsync(ISpacification<T> spec);
-
+       
     }
 }

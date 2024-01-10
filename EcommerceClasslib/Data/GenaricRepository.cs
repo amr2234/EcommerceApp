@@ -49,6 +49,12 @@ namespace EcommerceClasslib.Data
             return SpacificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), Spec);
         }
 
+        public async Task<bool> Add(T entity)
+        {
+            await _context.Set<T>().AddAsync(entity);
+            _context.SaveChanges();
 
+            return true;
+        }
     }
 }

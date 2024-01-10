@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { Brands } from '../shared/Models/brands';
-import { Product } from '../shared/Models/Products';
+import { NewProduct, Product } from '../shared/Models/Products';
 import { ShopParams } from '../shared/Models/ShopParams';
 import { Types } from '../shared/Models/types';
 import { ShopService } from './shop.service';
@@ -23,7 +25,7 @@ export class ShopComponent implements OnInit {
   ];
   totalCount = 0;
 
-  constructor(private shopService: ShopService) { }
+  constructor(private shopService: ShopService, private toastr: ToastrService) { }
 
 
 
@@ -56,6 +58,9 @@ export class ShopComponent implements OnInit {
     )
 
   }
+
+
+
   getTypes() {
     this.shopService.getTypes().subscribe(
 

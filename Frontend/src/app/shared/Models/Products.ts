@@ -14,3 +14,12 @@ export interface Product {
   productType: string
   productBrand: string
 }
+export class NewProduct {
+  id: number =0
+  name: string = ""
+  description: string =""
+  price: number = 0
+  pictureUrl: string= ""
+  productTypeId: number =0
+  productBrandId: number =0
+}
